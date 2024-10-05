@@ -20,11 +20,7 @@ function QrGenerator() {
     });
 
     //const documentId = docRef.id;
-    setTextQr(
-      "https://qrprod-5rj4tr2mv-dafazans-projects.vercel.app/" +
-        "/products/" +
-        docRef.id
-    );
+    setTextQr("qrprod.vercel.app/" + "/products/" + docRef.id);
   };
 
   const { Canvas } = useQRCode();
