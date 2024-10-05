@@ -1,21 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  where,
-  query,
-  getDoc,
-  deleteDoc,
-  updateDoc,
-  doc,
-  Firestore,
-  orderBy,
-  limit,
-} from "firebase/firestore";
-import { db, storage } from "@/app/db/firebase";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/app/db/firebase";
 interface Portfolios {
   nama?: string;
   tipe: string;
@@ -39,6 +26,7 @@ function Products() {
         return;
       }
 
+      // eslint-disable-next-line prefer-const
       let data: Portfolios[] = [];
       querySnapshot.forEach((doc) => {
         data.push({ ...(doc.data() as Portfolios), id: doc.id });
@@ -50,7 +38,7 @@ function Products() {
   }
   return (
     <div>
-      {portfolios.map((data, i) => (
+      {portfolios.map((data) => (
         <>
           <div className="py-1">
             <a href={`products/${data.id}`}>
