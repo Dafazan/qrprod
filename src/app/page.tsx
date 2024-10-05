@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { useQRCode } from "next-qrcode";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/app/db/firebase";
+import Sidebar from "@/components/sidebar";
 
 function QrGenerator() {
   const [nama, setNama] = useState<string>("");
@@ -31,7 +32,7 @@ function QrGenerator() {
   //   downloadElementAsPNG("qrCodeContainer", "qr_" + textQr + ".png");
   // };
 
-  const [qrcolor] = useState("#010599"); // Six-character hex string
+  const [qrcolor] = useState("#ef4444"); // Six-character hex string
   const [qrcolorOut] = useState("#ffffff");
 
   const [textQr, setTextQr] = useState("text");
@@ -50,70 +51,75 @@ function QrGenerator() {
 
   return (
     <>
-      <div className="flex flex-col p-5">
-        <div className="z-30 bg-[#282828] border border-[#777777] rounded-md p-5 gap-3 flex flex-col">
-          <p className="text-[#ffffff] font-bold text-xl">QR CODE GENERATOR</p>
-          <div className="flex gap-3">
-            <div className="bg-white p-3 rounded-md w-full flex flex-col gap-3 justify-between">
-              <div className="flex flex-col gap-1 text-red-500">
-                <p>Nama Produk</p>
-                <input
-                  id="outlined-multiline-static"
-                  className="border-2 rounded-md border-red-500 p-1 "
-                  onChange={(e) => setNama(e.target.value)}
-                  required
-                />
-              </div>
+      <div className="flex w-full">
+        <Sidebar />
+        <div className="w-full flex flex-col p-5">
+          <div className="z-30 bg-red-500  rounded-md p-5 gap-3 flex flex-col">
+            <p className="text-[#ffffff] font-bold text-xl">
+              QR CODE GENERATOR
+            </p>
+            <div className="flex gap-3">
+              <div className="bg-white p-3 rounded-md w-full flex flex-col gap-3 justify-between">
+                <div className="flex flex-col gap-1 text-red-500">
+                  <p>Product Name</p>
+                  <input
+                    id="outlined-multiline-static"
+                    className="border-2 rounded-md border-red-500 p-1 "
+                    onChange={(e) => setNama(e.target.value)}
+                    required
+                  />
+                </div>
 
-              <div className="flex flex-col gap-1 text-red-500">
-                <p>Tipe Produk</p>
-                <input
-                  id="outlined-multiline-static"
-                  className="border-2 rounded-md border-red-500 p-1 "
-                  onChange={(e) => setTipe(e.target.value)}
-                  required
-                />
-              </div>
+                <div className="flex flex-col gap-1 text-red-500">
+                  <p>Product Type</p>
+                  <input
+                    id="outlined-multiline-static"
+                    className="border-2 rounded-md border-red-500 p-1 "
+                    onChange={(e) => setTipe(e.target.value)}
+                    required
+                  />
+                </div>
 
-              <div className="flex flex-col gap-1 text-red-500">
-                <p>Harga Produk</p>
-                <input
-                  id="outlined-multiline-static"
-                  className="border-2 rounded-md border-red-500 p-1 "
-                  onChange={(e) => setHarga(e.target.value)}
-                  required
-                />
+                <div className="flex flex-col gap-1 text-red-500">
+                  <p>Price</p>
+                  <input
+                    id="outlined-multiline-static"
+                    className="border-2 rounded-md border-red-500 p-1 "
+                    onChange={(e) => setHarga(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  className="bg-red-500 w-full rounded-md p-2 text-white font-semibold"
+                  onClick={addData}
+                >
+                  SAVE AND GENERATE
+                </button>
               </div>
-              <button
-                className="bg-blue-500 w-full rounded-md p-2 text-white font-semibold"
-                onClick={addData}
-              >
-                SAVE AND GENERATE
-              </button>
-            </div>
-            <div className="bg-white rounded-md p-3 ">
-              <div ref={printRef}>
-                <Canvas
-                  text={textQr}
-                  options={{
-                    errorCorrectionLevel: "M",
-                    margin: 3,
-                    scale: 4,
-                    width: 200,
-                    color: {
-                      dark: qrcolor,
-                      light: qrcolorOut,
-                    },
-                  }}
-                />
-              </div>
+              <div className="bg-white rounded-md p-3 ">
+                <div ref={printRef}>
+                  <Canvas
+                    text={textQr}
+                    options={{
+                      errorCorrectionLevel: "M",
+                      margin: 3,
+                      scale: 4,
+                      width: 200,
+                      color: {
+                        dark: qrcolor,
+                        light: qrcolorOut,
+                      },
+                    }}
+                  />
+                </div>
 
-              <button
-                className="bg-blue-500 w-full rounded-md p-2 text-white font-semibold"
-                onClick={handlePrint}
-              >
-                PRINT
-              </button>
+                <button
+                  className="bg-red-500 w-full rounded-md p-2 text-white font-semibold"
+                  onClick={handlePrint}
+                >
+                  PRINT
+                </button>
+              </div>
             </div>
           </div>
         </div>

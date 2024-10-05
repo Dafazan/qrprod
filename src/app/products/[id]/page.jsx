@@ -42,10 +42,13 @@ function ProdDet({params}) {
   }
 
   return (
-    <div>
-      <p>Nama Prod: {fetchedDocumentData.nama}</p>
-      <p>Tipe Prod: {fetchedDocumentData.tipe}</p>
-      <p>Harga Prod: {fetchedDocumentData.harga}</p>
+    <div className="text-red-500  text-xl w-screen h-screen flex justify-center items-center">
+      <div>
+
+      <p className="text-2xl font-semibold">{fetchedDocumentData.nama}</p>
+      <p>Type: {fetchedDocumentData.tipe}</p>
+      <p>Price: {fetchedDocumentData.harga}</p>
+      </div>
 
      
     </div>

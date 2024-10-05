@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/app/db/firebase";
+import Sidebar from "@/components/sidebar";
 interface Portfolios {
   nama?: string;
   tipe: string;
@@ -37,16 +38,28 @@ function Products() {
     }
   }
   return (
-    <div>
-      {portfolios.map((data) => (
-        <>
-          <div className="py-1">
-            <a href={`products/${data.id}`}>
-              {data.nama} - {data.id}
-            </a>
-          </div>
-        </>
-      ))}
+    <div className="w-full flex">
+      <Sidebar />
+      <div className="w-full p-5">
+        <p className="text-red-500 font-bold text-xl mb-2">PRODUCT LIST</p>
+        {portfolios.map((data, i) => (
+          <>
+            <div className="pb-1">
+              <a
+                className="text-red-500 hover:text-red-300 font-semibold text-xl"
+                href={`products/${data.id}`}
+              >
+                {i + 1}. {data.nama}{" "}
+                <span className="font-normal text-xs">{data.tipe}</span>
+                <span className="font-normal text-xs">
+                  {" "}
+                  - Price: {data.harga}
+                </span>
+              </a>
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 }
