@@ -1,56 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useQRCode } from "next-qrcode";
-// import html2canvas from "html2canvas";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/app/db/firebase";
-
-// interface EventData {
-//   nama?: string;
-//   tipe: string;
-//   harga: string;
-// }
-
-// async function downloadElementAsPNG(elementId: string, fileName: string) {
-//   const element = document.getElementById(elementId);
-
-//   if (!element) {
-//     console.error(`Element with id ${elementId} not found.`);
-//     return;
-//   }
-
-//   try {
-//     // Use html2canvas to create a canvas image from the element
-//     const canvas = await html2canvas(element, {
-//       scale: 2, // Increase scale for better quality
-//       useCORS: true, // Allow cross-origin images
-//     });
-
-//     // Convert the canvas to a data URL representing a PNG image
-//     const dataURL = canvas.toDataURL("image/png");
-
-//     // Create a link element for downloading
-//     const downloadLink = document.createElement("a");
-//     downloadLink.href = dataURL;
-//     downloadLink.download = fileName;
-
-//     // Append the link to the document and trigger a click to start the download
-//     document.body.appendChild(downloadLink);
-//     downloadLink.click();
-
-//     // Clean up by removing the link from the document
-//     document.body.removeChild(downloadLink);
-//   } catch (error) {
-//     console.error("Error generating PNG:", error);
-//   }
-// }
 
 function QrGenerator() {
   const [nama, setNama] = useState<string>("");
   const [tipe, setTipe] = useState<string>("");
   const [harga, setHarga] = useState<string>("");
-  //const [qrlink, setQrlink] = useState<string>("");
-  //const domainName = window.location.hostname;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addData = async (e: any) => {
@@ -63,7 +20,11 @@ function QrGenerator() {
     });
 
     //const documentId = docRef.id;
-    setTextQr("qrpod.vercel.app" + "/products/" + docRef.id);
+    setTextQr(
+      "https://qrprod-5rj4tr2mv-dafazans-projects.vercel.app/" +
+        "/products/" +
+        docRef.id
+    );
 
     // Display the document ID as text
   };
@@ -79,19 +40,19 @@ function QrGenerator() {
   const [qrcolor] = useState("#010599"); // Six-character hex string
   const [qrcolorOut] = useState("#ffffff");
 
-  // const [isEmpty, setIsEmpty] = useState(false);
-  // const [isGenerated, setIsGenerated] = useState(false);
-  // const [text, setText] = useState("Empty" + qrlink);
   const [textQr, setTextQr] = useState("text");
-  // const handleGenerate = () => {
-  //   if (text.trim() === "") {
-  //     setIsEmpty(true);
-  //   } else {
-  //     setTextQr(text);
-  //     setIsEmpty(false);
-  //     setIsGenerated(true);
-  //   }
-  // };
+
+  const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = () => {
+    if (printRef.current) {
+      const printContents = printRef.current.innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+    }
+  };
 
   return (
     <>
@@ -137,25 +98,27 @@ function QrGenerator() {
               </button>
             </div>
             <div className="bg-white rounded-md p-3 ">
-              <Canvas
-                text={textQr}
-                options={{
-                  errorCorrectionLevel: "M",
-                  margin: 3,
-                  scale: 4,
-                  width: 200,
-                  color: {
-                    dark: qrcolor,
-                    light: qrcolorOut,
-                  },
-                }}
-              />
+              <div ref={printRef}>
+                <Canvas
+                  text={textQr}
+                  options={{
+                    errorCorrectionLevel: "M",
+                    margin: 3,
+                    scale: 4,
+                    width: 200,
+                    color: {
+                      dark: qrcolor,
+                      light: qrcolorOut,
+                    },
+                  }}
+                />
+              </div>
 
               <button
                 className="bg-blue-500 w-full rounded-md p-2 text-white font-semibold"
-                onClick={addData}
+                onClick={handlePrint}
               >
-                DOWNLOAD
+                PRINT
               </button>
             </div>
           </div>
