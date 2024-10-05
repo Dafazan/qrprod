@@ -50,7 +50,7 @@ function QrGenerator() {
   const [tipe, setTipe] = useState<string>("");
   const [harga, setHarga] = useState<string>("");
   //const [qrlink, setQrlink] = useState<string>("");
-  const domainName = window.location.hostname;
+  //const domainName = window.location.hostname;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addData = async (e: any) => {
@@ -63,7 +63,7 @@ function QrGenerator() {
     });
 
     //const documentId = docRef.id;
-    setTextQr(domainName + "/products/" + docRef.id);
+    setTextQr("qrpod.vercel.app" + "/products/" + docRef.id);
 
     // Display the document ID as text
   };
