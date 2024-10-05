@@ -25,8 +25,6 @@ function QrGenerator() {
         "/products/" +
         docRef.id
     );
-
-    // Display the document ID as text
   };
 
   const { Canvas } = useQRCode();
