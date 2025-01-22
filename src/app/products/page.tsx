@@ -44,16 +44,20 @@ function Products() {
         <p className="text-red-500 font-bold text-xl mb-2">PRODUCT LIST</p>
         {portfolios.map((data, i) => (
           <>
-            <div className="pb-1">
+            <div className="pb-1 bg-red">
               <a
-                className="text-red-500 hover:text-red-300 font-semibold text-xl"
+                className="text-red-500 bg-red-200 p-1 rounded-md hover:text-red-300 font-semibold text-xl flex w-"
                 href={`products/${data.id}`}
               >
-                {i + 1}. {data.nama}{" "}
-                <span className="font-normal text-xs">{data.tipe}</span>
+                <span className="line-clamp-1 w-[7%]">{i + 1}.</span>
+                <span className="line-clamp-1 w-[40%]">{data.nama}</span>
+                <span className="w-[25%] font-normal text-xs">
+                  Type:{" "}
+                  <span className="line-clamp-1 text-xl">{data.tipe}</span>
+                </span>
                 <span className="font-normal text-xs">
-                  {" "}
-                  - Price: {data.harga}
+                  Price:{" "}
+                  <span className="line-clamp-1 text-xl">{data.harga}</span>
                 </span>
               </a>
             </div>
