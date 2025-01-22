@@ -42,13 +42,20 @@ function ProdDet({params}) {
   }
 
   return (
-    <div className="text-red-500  text-xl w-screen h-screen flex justify-center items-center">
-      <div>
+    <div className="text-red-500  text-xl w-screen h-screen flex justify-center items-start p-5">
+      <div className="border-2 w-full border-red-500 rounded-md p-2 flex flex-col">
+<div className="w-full flex justify-center">
 
-      <p className="text-2xl font-semibold">{fetchedDocumentData.nama}</p>
-      <img alt="noimage" src={fetchedDocumentData.qrImage}/>
-      <p>Type: {fetchedDocumentData.tipe}</p>
-      <p>Price: {fetchedDocumentData.harga}</p>
+      <div className="border-2 border-red-500 rounded-md w-[200px] h-[200px] flex justify-center items-center">
+        <p>Product Image</p>
+      </div>
+</div>
+<div className=" mt-3 border-b-2 border-red-500"></div>
+      <p className="break-words text-4xl font-semibold uppercase">{fetchedDocumentData.nama}</p>
+      <p className="break-words font-bold">Type: {fetchedDocumentData.tipe}</p>
+      <p className="break-words ">Price: {fetchedDocumentData.harga}</p>
+      <br />
+      <p className="break-words ">{fetchedDocumentData.desc}</p>
       </div>
 
      
